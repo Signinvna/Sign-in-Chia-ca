@@ -1,136 +1,791 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tiện ích LĐTV 3 - Vietnam Airlines</title>
-    <meta name="theme-color" content="#00558F">
-    <link rel="manifest" href="manifest.json">
-    <style>
-        :root {
-            --vna-blue: #00558F;
-            --vna-gold: #BFA15F;
-            --bg-color: #F3F4F6;
-            --card-bg: #FFFFFF;
-            --text-main: #1F2937;
-            --text-muted: #6B7280;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); -webkit-font-smoothing: antialiased; padding-bottom: 30px; }
-        .header { background-color: var(--vna-blue); color: white; padding: 20px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-bottom: 4px solid var(--vna-gold); }
-        .header h1 { font-size: 20px; font-weight: 600; }
-        .header p { font-size: 13px; opacity: 0.9; margin-top: 5px; }
-        .container { max-width: 600px; margin: 0 auto; padding: 15px; }
-        
-        .tabs { display: flex; background: #E5E7EB; border-radius: 12px; margin-bottom: 20px; padding: 4px; }
-        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; font-size: 14px; font-weight: 600; color: var(--text-muted); border-radius: 8px; transition: all 0.3s ease; }
-        .tab-btn.active { background: white; color: var(--vna-blue); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        
-        .card { background: var(--card-bg); border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; display: none; }
-        .card.active { display: block; }
-        
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #D1D5DB; border-radius: 8px; font-size: 16px; outline: none; transition: border 0.2s; }
-        .form-group input:focus, .form-group select:focus { border-color: var(--vna-gold); }
-        .form-row { display: flex; gap: 10px; }
-        .form-row .form-group { flex: 1; }
-        
-        button.btn-primary { width: 100%; padding: 14px; background-color: var(--vna-gold); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; margin-top: 10px; cursor: pointer; transition: background 0.2s; }
-        button.btn-primary:active { background-color: #A68A4D; }
-        
-        .result-box { margin-top: 20px; padding: 15px; background: #F8FAFC; border-radius: 8px; border-left: 4px solid var(--vna-blue); display: none; }
-        .result-box.show { display: block; }
-        .result-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #E2E8F0; }
-        .result-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .result-item strong { color: var(--vna-blue); }
-        
-        .scenario-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; background: #FEF3C7; padding: 10px; border-radius: 6px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B72D6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="LĐTV3 VNA" />
+  <title>Tiện ích Tổ bay | Liên đội tiếp viên 3 VNA</title>
+  <link rel="icon" type="image/png" href="data:image/png;base64,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" />
+  <link rel="apple-touch-icon" href="data:image/png;base64,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" />
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    :root {
+      --radius: 14px;
+      --bg: #f6f8fb;
+      --fg: #131c31;
+      --card: #ffffff;
+      --primary: #0EA5E9;
+      --navy: #0B72D6;
+      --navy-dark: #0855a3;
+      --gold: #E3A834;
+      --gold-fg: #1e2d4a;
+      --secondary: #eef5fc;
+      --secondary-fg: #1e5b9c;
+      --muted: #f1f5f9;
+      --muted-fg: #5c6f8a;
+      --border: #dfe7f0;
+      --destructive: #dc2626;
+      --success: #16a34a;
+      --gradient-navy: linear-gradient(135deg, #0B72D6 0%, #0EA5E9 100%);
+      --gradient-gold: linear-gradient(120deg, #ecc058 0%, #d89b24 100%);
+      --shadow-card: 0 2px 8px rgba(11, 114, 214, 0.06), 0 10px 26px -12px rgba(11, 114, 214, 0.22);
+      --shadow-float: 0 18px 42px -18px rgba(11, 114, 214, 0.45);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Be Vietnam Pro", sans-serif; background: var(--bg); color: var(--fg); line-height: 1.5; -webkit-font-smoothing: antialiased; padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 76px); }
+    header { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding-top: env(safe-area-inset-top, 0px); }
+    .header-inner { max-width: 820px; margin: 0 auto; height: 60px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand-logo { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+    .brand-divider { width: 1px; height: 26px; background: var(--border); }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+    .brand-title { font-size: 14px; font-weight: 700; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .brand-sub { font-size: 11px; font-weight: 500; color: var(--muted-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .offline-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; flex-shrink: 0; }
+    .offline-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; }
+    
+    .hero { background: var(--gradient-navy); color: #ffffff; padding: 24px 16px 28px; }
+    .hero-inner { max-width: 820px; margin: 0 auto; }
+    .hero-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.14); color: #fde08d; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; }
+    .hero h1 { font-size: 24px; font-weight: 800; margin-top: 10px; letter-spacing: -0.02em; }
+    .hero p { font-size: 13.5px; color: rgba(255, 255, 255, 0.86); margin-top: 4px; }
+    
+    .nav-tabs-desktop { max-width: 820px; margin: -18px auto 0; padding: 0 16px; position: relative; z-index: 10; }
+    .tabs-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--card); padding: 6px; border-radius: 16px; box-shadow: var(--shadow-card); border: 1px solid var(--border); }
+    .tab-btn { border: none; background: transparent; padding: 11px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; color: var(--muted-fg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; }
+    .tab-btn.active { background: var(--gradient-navy); color: #ffffff; box-shadow: 0 4px 12px rgba(11, 114, 214, 0.3); }
+    
+    .container { max-width: 820px; margin: 0 auto; padding: 18px 16px; }
+    .panel { display: none; animation: fadeIn 0.22s ease; }
+    .panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; box-shadow: var(--shadow-card); margin-bottom: 16px; }
+    .card-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 520px) { .grid-2 { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    label { font-size: 13px; font-weight: 600; color: var(--fg); }
+    .hint { font-size: 11.5px; color: var(--muted-fg); margin-top: 2px; }
+    
+    input[type="time"], input[type="date"], input[type="number"], select { width: 100%; height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid var(--border); background: #ffffff; color: var(--fg); font-size: 16px; font-weight: 600; font-family: inherit; outline: none; transition: border-color 0.15s, box-shadow 0.15s; appearance: none; -webkit-appearance: none; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235c6f8a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+    input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.16); }
+    
+    .chip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    @media (max-width: 520px) { .chip-grid { grid-template-columns: repeat(2, 1fr); } }
+    .chip-btn { border: 1.5px solid var(--border); background: #ffffff; color: var(--fg); padding: 10px 10px; border-radius: 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; text-align: left; transition: all 0.15s; }
+    .chip-btn.active { background: var(--primary); border-color: var(--primary); color: #ffffff; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25); }
+    
+    .seg-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .seg-btn { border: 1.5px solid var(--border); background: var(--muted); color: var(--muted-fg); padding: 12px 10px; border-radius: 12px; font-size: 13.5px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .seg-btn.active { background: var(--secondary); border-color: var(--navy); color: var(--navy); box-shadow: 0 2px 8px rgba(11, 114, 214, 0.12); }
+    .seg-btn small { display: block; font-size: 11px; font-weight: 500; margin-top: 2px; opacity: 0.85; }
+    
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill-opt { flex: 1; min-width: 72px; height: 44px; border: 1.5px solid var(--border); background: #ffffff; color: var(--fg); border-radius: 11px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+    .pill-opt.active { background: var(--navy); border-color: var(--navy); color: #ffffff; }
+    
+    .result-card { background: var(--gradient-navy); color: #ffffff; border-radius: 20px; padding: 22px 20px; box-shadow: var(--shadow-float); margin-bottom: 16px; }
+    .result-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #fde08d; }
+    .result-big { font-size: 52px; font-weight: 800; line-height: 1.05; margin-top: 4px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+    .result-date { font-size: 13.5px; color: rgba(255, 255, 255, 0.82); margin-top: 4px; text-transform: capitalize; }
+    
+    .badges-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .badge { padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .badge-glass { background: rgba(255, 255, 255, 0.15); color: #ffffff; }
+    .badge-gold { background: var(--gold); color: var(--gold-fg); font-weight: 700; }
+    .badge-danger { background: var(--destructive); color: #ffffff; }
+    
+    .action-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .btn-action { flex: 1; min-width: 140px; height: 44px; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.1s, opacity 0.15s; }
+    .btn-action:active { transform: scale(0.98); }
+    .btn-glass { background: rgba(255, 255, 255, 0.18); color: #ffffff; }
+    .btn-gold { background: var(--gold); color: var(--gold-fg); }
+    
+    .shift-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 14px; }
+    .shift-box { background: rgba(255, 255, 255, 0.13); border: 1px solid rgba(255, 255, 255, 0.24); border-radius: 16px; padding: 14px 16px; }
+    .shift-box-head { display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #fde08d; }
+    .shift-box-time { font-size: 26px; font-weight: 800; margin-top: 6px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+    .shift-box-dur { font-size: 12.5px; color: rgba(255, 255, 255, 0.85); margin-top: 3px; }
+    
+    .timeline { list-style: none; margin-top: 4px; }
+    .timeline-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 10px; }
+    .timeline-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .tl-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .tl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .tl-title { font-size: 14px; font-weight: 700; color: var(--fg); }
+    .tl-sub { font-size: 12px; color: var(--muted-fg); }
+    .tl-time { font-size: 14.5px; font-weight: 800; color: var(--navy); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+    
+    .ref-list { list-style: none; }
+    .ref-item { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+    .ref-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ref-val { font-weight: 700; color: var(--primary); font-variant-numeric: tabular-nums; }
+    
+    .toast { position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 84px); left: 50%; transform: translateX(-50%) translateY(20px); background: #131c31; color: #ffffff; padding: 11px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.25); opacity: 0; pointer-events: none; transition: all 0.25s ease; z-index: 100; max-width: 90vw; text-align: center; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom, 0px); z-index: 50; display: none; }
+    @media (max-width: 640px) { .nav-tabs-desktop { display: none; } .bottom-nav { display: grid; grid-template-columns: 1fr 1fr; } }
+    .bnav-btn { border: none; background: transparent; padding: 10px 8px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 700; color: var(--muted-fg); cursor: pointer; }
+    .bnav-btn.active { color: var(--navy); }
+    .bnav-btn svg { width: 22px; height: 22px; }
+    
+    .alert-warn { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 12px 14px; border-radius: 12px; font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+    footer { max-width: 820px; margin: 8px auto 20px; padding: 0 16px; text-align: center; font-size: 12px; color: var(--muted-fg); }
+  </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>Tiện ích Galley 3 Smalltalk</h1>
-    <p>Liên đội tiếp viên 3 - Chế độ Offline</p>
-</div>
-
-<div class="container">
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('signin')">Tính Sign-in</button>
-        <button class="tab-btn" onclick="switchTab('chiaca')">Tính Chia Ca</button>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <img src="data:image/png;base64,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" alt="Vietnam Airlines Lotus" class="brand-logo" />
+        <div class="brand-divider"></div>
+        <div class="brand-text">
+          <span class="brand-title">Liên đội tiếp viên 3</span>
+          <span class="brand-sub">Đoàn tiếp viên Vietnam Airlines</span>
+        </div>
+      </div>
+      <div class="offline-badge" id="netStatus">
+        <span class="offline-dot"></span>
+        <span>Sẵn sàng Offline</span>
+      </div>
     </div>
+  </header>
 
-    <!-- Tab Sign-in -->
-    <div id="signin" class="card active">
-        <div class="form-group">
-            <label>Giờ khởi hành (STD)</label>
-            <input type="time" id="std-time" required>
-        </div>
-        <div class="form-group">
-            <label>Loại chuyến bay</label>
-            <select id="flight-type">
-                <option value="90">Quốc nội (Trước 1h30p)</option>
-                <option value="120">Quốc tế (Trước 2h00p)</option>
-            </select>
-        </div>
-        <button class="btn-primary" onclick="calcSignIn()">Tính Giờ</button>
-        <div id="signin-result" class="result-box">
-            <div class="result-item"><span>Giờ Sign-in:</span><strong id="signin-time-out">--:--</strong></div>
-        </div>
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-pill">✈ Crew Utility • LĐTV3</span>
+      <h1 id="heroTitle">Tính giờ Sign-in</h1>
+      <p id="heroDesc">Nhập giờ khởi hành (ETD) và chọn loại chuyến bay để nhận mốc trình diện.</p>
     </div>
+  </section>
 
-    <!-- Tab Chia Ca -->
-    <div id="chiaca" class="card">
-        <div class="form-group">
-            <label>Kịch bản chia ca</label>
-            <select id="scenario" onchange="updateScenarioUI()">
-                <option value="1">TH1: Giao ca giữa chuyến, mời khách trước khi đáp</option>
-                <option value="2">TH2: Mời khách ngay, ca 2 nghỉ dài đến trước khi đáp</option>
-                <option value="3">TH3: Chia 3 ca (Mời khách giữa ca 1 và ca 2)</option>
-            </select>
-        </div>
-        <div id="scenario-desc" class="scenario-desc"></div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>Bắt đầu ca 1</label>
-                <input type="time" id="shift-start" value="03:20">
-            </div>
-            <div class="form-group">
-                <label>Giờ đáp</label>
-                <input type="time" id="land-time" value="14:00">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Giờ mời khách</label>
-                <input type="time" id="meal-time" value="11:30">
-            </div>
-            <div class="form-group">
-                <label>Giao ca / Chuẩn bị (Phút)</label>
-                <input type="number" id="handover-time" value="10">
-            </div>
-        </div>
-
-        <div id="extra-inputs-th2" style="display:none;">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Thời gian mời ăn (Phút)</label>
-                    <input type="number" id="meal-duration" value="90">
-                </div>
-                <div class="form-group">
-                    <label>Thức trước đáp (Phút)</label>
-                    <input type="number" id="wakeup-time" value="60">
-                </div>
-            </div>
-        </div>
-
-        <button class="btn-primary" onclick="calcShifts()">Tính Chia Ca</button>
-        <div id="shift-result" class="result-box"></div>
+  <!-- Desktop / iPad Navigation -->
+  <div class="nav-tabs-desktop">
+    <div class="tabs-bar">
+      <button class="tab-btn active" data-tab="signin" onclick="switchTab('signin')">
+        ⏱ Tính giờ Sign-in
+      </button>
+      <button class="tab-btn" data-tab="shift" onclick="switchTab('shift')">
+        🛏 Chia ca nghỉ
+      </button>
     </div>
-</div>
+  </div>
 
-<script src="app.js"></script>
+  <main class="container">
+    <!-- TAB 1: SIGN-IN CALCULATOR -->
+    <section id="panel-signin" class="panel active">
+      <div class="card">
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="siDate">Ngày bay</label>
+            <input type="date" id="siDate" />
+            <div class="hint" id="siAutoHint" style="display:none;">
+              Đã tự động chuyển sang ngày mai (ETD hôm nay đã qua).
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="siEtd">Giờ khởi hành ETD (HH:mm)</label>
+            <input type="time" id="siEtd" />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:14px;">
+          <label for="siType">Loại chuyến bay</label>
+          <select id="siType"></select>
+        </div>
+        <div class="chip-grid" id="siChips"></div>
+      </div>
+
+      <div id="siResultBox" style="display:none;" class="result-card">
+        <div class="result-label">Giờ Sign-in</div>
+        <div class="result-big" id="siTimeOut">--:--</div>
+        <div class="result-date" id="siDateOut"></div>
+
+        <div class="badges-row">
+          <span class="badge badge-glass" id="siFormulaBadge"></span>
+          <span class="badge badge-gold" id="siCountdownBadge"></span>
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="btn-action btn-glass" onclick="copySignIn()">
+            📋 Sao chép
+          </button>
+          <button type="button" class="btn-action btn-glass" onclick="setSignInAlarm()">
+            ⏰ Hẹn giờ (-1h15)
+          </button>
+          <button type="button" class="btn-action btn-gold" onclick="addSignInCalendar()">
+            📅 Thêm vào lịch
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 Bảng thời gian trình diện</div>
+        <ul class="ref-list" id="siRefList"></ul>
+      </div>
+    </section>
+
+    <!-- TAB 2: IN-FLIGHT SHIFT REST CALCULATOR -->
+    <section id="panel-shift" class="panel">
+      <div class="card">
+        <div class="card-title">1. Tùy chọn chia ca</div>
+        
+        <div class="form-group">
+          <label>Số ca nghỉ</label>
+          <div class="seg-group">
+            <button type="button" class="seg-btn active" id="btnCount2" onclick="setShiftCount(2)">
+              2 Ca nghỉ
+            </button>
+            <button type="button" class="seg-btn" id="btnCount3" onclick="setShiftCount(3)">
+              3 Ca nghỉ
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group" id="optsCaseSelect" style="margin-top:14px;">
+          <label>Phương án (2 ca)</label>
+          <div class="seg-group">
+            <button type="button" class="seg-btn active" id="btnCase1" onclick="setShiftCase(1)">
+              Nghỉ liên tục
+              <small>Mời ăn trước đáp</small>
+            </button>
+            <button type="button" class="seg-btn" id="btnCase2" onclick="setShiftCase(2)">
+              Mời giữa chuyến
+              <small>Ăn giữa 2 ca</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="form-group">
+            <label for="shStart">Giờ bắt đầu Ca 1</label>
+            <input type="time" id="shStart" value="03:20" />
+          </div>
+          <div class="form-group">
+            <label for="shLand">Giờ đáp (ATA/ETA)</label>
+            <input type="time" id="shLand" value="14:00" />
+            <div class="hint" id="shNextDayHint" style="display:none;">
+              Đã tự động tính qua ngày hôm sau (+1).
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:14px;">
+          <label>Giao ca / Chuẩn bị (phút)</label>
+          <div class="pill-row" id="handoverPills">
+            <button type="button" class="pill-opt active" data-val="10" onclick="setHandover(10)">10p</button>
+            <button type="button" class="pill-opt" data-val="15" onclick="setHandover(15)">15p</button>
+            <button type="button" class="pill-opt" data-val="20" onclick="setHandover(20)">20p</button>
+          </div>
+        </div>
+
+        <!-- Meal Before Landing (Used in 2-shift Continuous & 3-shift Continuous) -->
+        <div id="optsCase1" style="margin-top:14px;">
+          <div class="form-group">
+            <label>Mời ăn trước đáp</label>
+            <div class="pill-row" id="c1MealBeforePills">
+              <button type="button" class="pill-opt" data-val="120" onclick="setC1MealBefore(120)">2h00</button>
+              <button type="button" class="pill-opt active" data-val="150" onclick="setC1MealBefore(150)">2h30</button>
+              <button type="button" class="pill-opt" data-val="180" onclick="setC1MealBefore(180)">3h00</button>
+            </div>
+            <div class="hint">Ca cuối sẽ được đánh thức để chuẩn bị đúng bằng thời gian giao ca.</div>
+          </div>
+        </div>
+
+        <!-- Meal Mid-Flight (Used only in 2-shift TH2) -->
+        <div id="optsCase2" style="display:none; margin-top:14px;">
+          <div class="form-group">
+            <label>Thời gian mời ăn (giữa 2 ca)</label>
+            <div class="pill-row" id="c2MealDurPills">
+              <button type="button" class="pill-opt active" data-val="90" onclick="setC2MealDur(90)">1h30</button>
+              <button type="button" class="pill-opt" data-val="105" onclick="setC2MealDur(105)">1h45</button>
+              <button type="button" class="pill-opt" data-val="120" onclick="setC2MealDur(120)">2h00</button>
+            </div>
+            <div class="hint">Ca 1 chuẩn bị galley trước, mời xong đổi Ca 2 vào nghỉ đến trước đáp 1 tiếng.</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="shWarnBox" class="alert-warn" style="display:none;"></div>
+
+      <div id="shResultBox" class="result-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+          <span class="result-label" id="shCaseLabel">CHIA 2 CA • NGHỈ LIÊN TỤC</span>
+          <span class="badge badge-glass" id="shMealBadge" style="font-size:12px;">Mời ăn: 11:30</span>
+        </div>
+
+        <div class="shift-grid" id="shiftBoxes">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="btn-action btn-gold" onclick="copyShiftPlan()">
+            📋 Sao chép lịch chia ca
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🕒 Mốc thời gian chi tiết</div>
+        <ul class="timeline" id="shTimeline"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Liên đội tiếp viên 3 • Vietnam Airlines • Hoạt động offline hoàn toàn.
+  </footer>
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <button class="bnav-btn active" data-tab="signin" onclick="switchTab('signin')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      <span>Tính Sign-in</span>
+    </button>
+    <button class="bnav-btn" data-tab="shift" onclick="switchTab('shift')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/>
+      </svg>
+      <span>Chia ca nghỉ</span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ========================
+    // UTILITIES
+    // ========================
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function fmtMinsToHM(mins) {
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      return `${h}h${pad(m)}`;
+    }
+    function fmtOffsetLong(mins) { return `${Math.floor(mins / 60)} giờ ${pad(mins % 60)} phút`; }
+    function minsToClock(totalMins) {
+      const norm = ((totalMins % 1440) + 1440) % 1440;
+      const h = Math.floor(norm / 60);
+      const m = norm % 60;
+      return `${pad(h)}:${pad(m)}`;
+    }
+    function parseClock(str) {
+      if (!str || !str.includes(':')) return null;
+      const [h, m] = str.split(':').map(Number);
+      if (isNaN(h) || isNaN(m)) return null;
+      return h * 60 + m;
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn, .bnav-btn').forEach(b => { b.classList.toggle('active', b.dataset.tab === tab); });
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + tab).classList.add('active');
+
+      const heroTitle = document.getElementById('heroTitle');
+      const heroDesc = document.getElementById('heroDesc');
+      if (tab === 'signin') {
+        heroTitle.textContent = 'Tính giờ Sign-in';
+        heroDesc.textContent = 'Nhập giờ khởi hành (ETD) và chọn loại chuyến bay để nhận mốc trình diện.';
+      } else {
+        heroTitle.textContent = 'Chia ca nghỉ';
+        heroDesc.textContent = 'Tự động chia đều thời gian nghỉ theo số ca, kèm mốc giao ca và mời ăn.';
+      }
+      localStorage.setItem('ldtv3_active_tab', tab);
+    }
+
+    // ========================
+    // FEATURE 1: SIGN-IN
+    // ========================
+    const FLIGHT_TYPES = [
+      { key: "dom", label: "Nội địa", offset: 105 },
+      { key: "dom_bag", label: "Nội địa ký gửi", offset: 115 },
+      { key: "int_short", label: "Quốc tế ngắn", offset: 100 },
+      { key: "int_med", label: "Quốc tế trung", offset: 115 },
+      { key: "int_long", label: "Quốc tế dài (trừ Mỹ)", offset: 125 },
+      { key: "int_us", label: "Quốc tế Mỹ", offset: 155 },
+      { key: "vip_dom", label: "Chuyên cơ nội địa", offset: 140 },
+    ];
+
+    let siSelectedType = localStorage.getItem('ldtv3_si_type') || 'dom';
+    let siDateTouched = false;
+    let siCurrentResult = null;
+
+    function todayISO() { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
+
+    function initSignIn() {
+      const dateInput = document.getElementById('siDate');
+      const etdInput = document.getElementById('siEtd');
+      const typeSelect = document.getElementById('siType');
+      const chipsDiv = document.getElementById('siChips');
+      const refList = document.getElementById('siRefList');
+      dateInput.value = todayISO();
+
+      FLIGHT_TYPES.forEach(f => {
+        const opt = document.createElement('option');
+        opt.value = f.key;
+        opt.textContent = `${f.label} — ETD − ${fmtOffsetLong(f.offset)}`;
+        typeSelect.appendChild(opt);
+
+        const li = document.createElement('li');
+        li.className = 'ref-item';
+        li.innerHTML = `<span>${f.label}</span><span class="ref-val">ETD − ${fmtOffsetLong(f.offset)}</span>`;
+        refList.appendChild(li);
+
+        if (f.key !== 'dom_bag') {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'chip-btn' + (f.key === siSelectedType ? ' active' : '');
+          btn.dataset.key = f.key;
+          btn.innerHTML = `✈ ${f.label}`;
+          btn.onclick = () => selectFlightType(f.key);
+          chipsDiv.appendChild(btn);
+        }
+      });
+      typeSelect.value = siSelectedType;
+      typeSelect.addEventListener('change', (e) => selectFlightType(e.target.value));
+      dateInput.addEventListener('change', () => { siDateTouched = true; document.getElementById('siAutoHint').style.display = 'none'; calcSignIn(); });
+
+      let autoTimer = null;
+      etdInput.addEventListener('input', () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(() => {
+          if (!siDateTouched && etdInput.value) {
+            const [h, m] = etdInput.value.split(':').map(Number);
+            if (!isNaN(h) && !isNaN(m)) {
+              const dep = new Date();
+              dep.setHours(h, m, 0, 0);
+              const target = new Date();
+              const isPast = dep.getTime() < Date.now();
+              if (isPast) target.setDate(target.getDate() + 1);
+              dateInput.value = `${target.getFullYear()}-${pad(target.getMonth() + 1)}-${pad(target.getDate())}`;
+              document.getElementById('siAutoHint').style.display = isPast ? 'block' : 'none';
+            }
+          }
+          calcSignIn();
+        }, 500);
+        calcSignIn();
+      });
+      setInterval(updateCountdown, 1000);
+    }
+
+    function selectFlightType(key) {
+      siSelectedType = key;
+      localStorage.setItem('ldtv3_si_type', key);
+      document.getElementById('siType').value = key;
+      document.querySelectorAll('#siChips .chip-btn').forEach(b => { b.classList.toggle('active', b.dataset.key === key); });
+      calcSignIn();
+    }
+
+    function calcSignIn() {
+      const dateVal = document.getElementById('siDate').value;
+      const etdVal = document.getElementById('siEtd').value;
+      const box = document.getElementById('siResultBox');
+      if (!dateVal || !etdVal) { box.style.display = 'none'; siCurrentResult = null; return; }
+
+      const [h, m] = etdVal.split(':').map(Number);
+      if (isNaN(h) || isNaN(m)) return;
+
+      const flight = FLIGHT_TYPES.find(f => f.key === siSelectedType);
+      const dep = new Date(`${dateVal}T${pad(h)}:${pad(m)}:00`);
+      if (isNaN(dep.getTime())) return;
+
+      const signIn = new Date(dep.getTime() - flight.offset * 60000);
+      siCurrentResult = { dep, signIn, etd: etdVal, flight };
+
+      document.getElementById('siTimeOut').textContent = `${pad(signIn.getHours())}:${pad(signIn.getMinutes())}`;
+      document.getElementById('siDateOut').textContent = signIn.toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
+      document.getElementById('siFormulaBadge').textContent = `ETD ${etdVal} − ${fmtOffsetLong(flight.offset)}`;
+      box.style.display = 'block';
+      updateCountdown();
+    }
+
+    function updateCountdown() {
+      if (!siCurrentResult) return;
+      const diff = siCurrentResult.signIn.getTime() - Date.now();
+      const past = diff < 0;
+      const abs = Math.abs(diff);
+      const h = Math.floor(abs / 3600000);
+      const m = Math.floor((abs % 3600000) / 60000);
+      const s = Math.floor((abs % 60000) / 1000);
+      const badge = document.getElementById('siCountdownBadge');
+      badge.className = 'badge ' + (past ? 'badge-danger' : 'badge-gold');
+      badge.textContent = past ? `Đã qua ${pad(h)}:${pad(m)}:${pad(s)}` : `Còn ${pad(h)}:${pad(m)}:${pad(s)}`;
+    }
+
+    function copySignIn() {
+      if (!siCurrentResult) return;
+      const { signIn, etd, flight } = siCurrentResult;
+      const txt = `Sign-in ${pad(signIn.getHours())}:${pad(signIn.getMinutes())} ngày ${signIn.toLocaleDateString('vi-VN')} (ETD ${etd}, ${flight.label})`;
+      navigator.clipboard?.writeText(txt).then(() => showToast('Đã sao chép: ' + txt)).catch(() => showToast(txt));
+    }
+
+    function setSignInAlarm() {
+      if (!siCurrentResult) return;
+      const wake = new Date(siCurrentResult.signIn.getTime() - 75 * 60000);
+      const h = wake.getHours();
+      const m = wake.getMinutes();
+      const hhmm = `${pad(h)}:${pad(m)}`;
+      if (/android/i.test(navigator.userAgent)) {
+        const msg = encodeURIComponent(`Sign-in ${pad(siCurrentResult.signIn.getHours())}:${pad(siCurrentResult.signIn.getMinutes())}`);
+        window.location.href = `intent:#Intent;action=android.intent.action.SET_ALARM;i.android.intent.extra.alarm.HOUR=${h};i.android.intent.extra.alarm.MINUTES=${m};S.android.intent.extra.alarm.MESSAGE=${msg};B.android.intent.extra.alarm.SKIP_UI=false;end`;
+      } else {
+        navigator.clipboard?.writeText(hhmm).catch(() => {});
+        showToast(`Báo thức gợi ý: ${hhmm} (-1h15) — Đã sao chép vào bộ nhớ!`);
+      }
+    }
+
+    function addSignInCalendar() {
+      if (!siCurrentResult) return;
+      const { signIn, dep, etd, flight } = siCurrentResult;
+      const toICS = (d) => `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
+      const title = `Sign-in tổ bay (${flight.label})`;
+      const desc = `ETD ${etd} - Sign-in = ETD - ${fmtOffsetLong(flight.offset)}`;
+      if (/android/i.test(navigator.userAgent)) {
+        window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${toICS(signIn)}/${toICS(dep)}&details=${encodeURIComponent(desc + " - Nhắc trước 1h15")}`, "_blank");
+        return;
+      }
+      const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//LDTV3//Sign-in//VI","BEGIN:VEVENT",`UID:${Date.now()}@ldtv3`,`DTSTAMP:${toICS(new Date())}`,`DTSTART:${toICS(signIn)}`,`DTEND:${toICS(dep)}`,`SUMMARY:${title}`,`DESCRIPTION:${desc}`,"BEGIN:VALARM","TRIGGER:-PT1H15M","ACTION:DISPLAY","DESCRIPTION:Chuẩn bị sign-in","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
+      if (/iphone|ipad|ipod|macintosh/i.test(navigator.userAgent)) {
+        window.location.href = `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
+        return;
+      }
+      const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+      const a = document.createElement("a"); a.href = url; a.download = "sign-in.ics"; document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    // ========================
+    // FEATURE 2: SHIFT REST
+    // ========================
+    let shShiftCount = 2; 
+    let shCase = 1; 
+    let shHandover = 10;
+    let shC1MealBefore = 150; 
+    let shC2MealDur = 90;
+    let shSummaryText = '';
+
+    function setShiftCount(n) {
+      shShiftCount = n;
+      document.getElementById('btnCount2').classList.toggle('active', n === 2);
+      document.getElementById('btnCount3').classList.toggle('active', n === 3);
+      document.getElementById('optsCaseSelect').style.display = n === 2 ? 'block' : 'none';
+      if (n === 3) {
+        document.getElementById('optsCase1').style.display = 'block';
+        document.getElementById('optsCase2').style.display = 'none';
+      } else {
+        setShiftCase(shCase);
+      }
+      calcShifts();
+    }
+
+    function setShiftCase(c) {
+      shCase = c;
+      if (shShiftCount === 2) {
+        document.getElementById('btnCase1').classList.toggle('active', c === 1);
+        document.getElementById('btnCase2').classList.toggle('active', c === 2);
+        document.getElementById('optsCase1').style.display = c === 1 ? 'block' : 'none';
+        document.getElementById('optsCase2').style.display = c === 2 ? 'block' : 'none';
+      }
+      calcShifts();
+    }
+
+    function setHandover(mins) {
+      shHandover = mins;
+      document.querySelectorAll('#handoverPills .pill-opt').forEach(b => { b.classList.toggle('active', Number(b.dataset.val) === mins); });
+      calcShifts();
+    }
+
+    function setC1MealBefore(mins) {
+      shC1MealBefore = mins;
+      document.querySelectorAll('#c1MealBeforePills .pill-opt').forEach(b => { b.classList.toggle('active', Number(b.dataset.val) === mins); });
+      calcShifts();
+    }
+
+    function setC2MealDur(mins) {
+      shC2MealDur = mins;
+      document.querySelectorAll('#c2MealDurPills .pill-opt').forEach(b => { b.classList.toggle('active', Number(b.dataset.val) === mins); });
+      calcShifts();
+    }
+
+    function calcShifts() {
+      const startM = parseClock(document.getElementById('shStart').value);
+      let landM = parseClock(document.getElementById('shLand').value);
+      const warnBox = document.getElementById('shWarnBox');
+      const resBox = document.getElementById('shResultBox');
+      
+      if (startM === null || landM === null) { resBox.style.display = 'none'; return; }
+
+      let nextDay = false;
+      if (landM <= startM) { landM += 1440; nextDay = true; }
+      document.getElementById('shNextDayHint').style.display = nextDay ? 'block' : 'none';
+
+      let timelineItems = [];
+
+      if (shShiftCount === 3) {
+        // 3 SHIFTS CONTINUOUS
+        let mealStart = landM - shC1MealBefore;
+        let c3End = mealStart - shHandover;
+        let netRestTotal = (c3End - startM) - (2 * shHandover);
+
+        if (netRestTotal < 30) {
+          warnBox.style.display = 'block';
+          warnBox.textContent = '⚠️ Quỹ thời gian quá ngắn để chia 3 ca. Vui lòng kiểm tra lại giờ hoặc giảm thời gian mời ăn.';
+          resBox.style.display = 'none';
+          document.getElementById('shTimeline').innerHTML = '';
+          return;
+        }
+        warnBox.style.display = 'none';
+        resBox.style.display = 'block';
+
+        let c1Dur = Math.floor(netRestTotal / 3);
+        let c2Dur = Math.floor(netRestTotal / 3);
+        let c3Dur = netRestTotal - c1Dur - c2Dur;
+
+        let c1Start = startM;
+        let c1End = c1Start + c1Dur;
+        let c2Start = c1End + shHandover;
+        let c2End = c2Start + c2Dur;
+        let c3Start = c2End + shHandover;
+
+        document.getElementById('shCaseLabel').textContent = 'CHIA 3 CA • NGHỈ LIÊN TỤC';
+        document.getElementById('shMealBadge').textContent = `Mời ăn: ${minsToClock(mealStart)} • Đáp: ${minsToClock(landM)}`;
+        
+        document.getElementById('shiftBoxes').innerHTML = `
+          <div class="shift-box"><div class="shift-box-head"><span>🌙 CA 1</span><span>${fmtMinsToHM(c1Dur)}</span></div><div class="shift-box-time">${minsToClock(c1Start)} – ${minsToClock(c1End)}</div><div class="shift-box-dur">Giao ca ${minsToClock(c1End)}</div></div>
+          <div class="shift-box"><div class="shift-box-head"><span>🌙 CA 2</span><span>${fmtMinsToHM(c2Dur)}</span></div><div class="shift-box-time">${minsToClock(c2Start)} – ${minsToClock(c2End)}</div><div class="shift-box-dur">Giao ca ${minsToClock(c2End)}</div></div>
+          <div class="shift-box"><div class="shift-box-head"><span>🌙 CA 3</span><span>${fmtMinsToHM(c3Dur)}</span></div><div class="shift-box-time">${minsToClock(c3Start)} – ${minsToClock(c3End)}</div><div class="shift-box-dur">Dậy lúc ${minsToClock(c3End)} mời ăn</div></div>
+        `;
+
+        timelineItems = [
+          { color: '#0B72D6', title: 'Ca 1 nghỉ', sub: `Thời lượng: ${fmtMinsToHM(c1Dur)}`, time: `${minsToClock(c1Start)} – ${minsToClock(c1End)}` },
+          { color: '#94a3b8', title: 'Giao ca 1 → 2', sub: `${shHandover} phút`, time: `${minsToClock(c1End)} – ${minsToClock(c2Start)}` },
+          { color: '#0EA5E9', title: 'Ca 2 nghỉ', sub: `Thời lượng: ${fmtMinsToHM(c2Dur)}`, time: `${minsToClock(c2Start)} – ${minsToClock(c2End)}` },
+          { color: '#94a3b8', title: 'Giao ca 2 → 3', sub: `${shHandover} phút`, time: `${minsToClock(c2End)} – ${minsToClock(c3Start)}` },
+          { color: '#38bdf8', title: 'Ca 3 nghỉ', sub: `Thời lượng: ${fmtMinsToHM(c3Dur)}`, time: `${minsToClock(c3Start)} – ${minsToClock(c3End)}` },
+          { color: '#f59e0b', title: 'Chuẩn bị galley', sub: `${shHandover} phút trước mời ăn`, time: `${minsToClock(c3End)} – ${minsToClock(mealStart)}` },
+          { color: '#10b981', title: 'Phục vụ mời ăn trước đáp', sub: `Trước đáp ${fmtMinsToHM(shC1MealBefore)}`, time: `${minsToClock(mealStart)} – ${minsToClock(landM)}` },
+          { color: '#131c31', title: 'Hạ cánh', sub: nextDay ? 'Ngày hôm sau (+1)' : 'Cùng ngày', time: `${minsToClock(landM)}` }
+        ];
+
+        shSummaryText = `✈ CHIA 3 CA (Đáp ${minsToClock(landM)} | Mời ăn ${minsToClock(mealStart)})\n• Ca 1: ${minsToClock(c1Start)} – ${minsToClock(c1End)} (${fmtMinsToHM(c1Dur)})\n• Giao ca: ${minsToClock(c1End)} – ${minsToClock(c2Start)} (${shHandover}p)\n• Ca 2: ${minsToClock(c2Start)} – ${minsToClock(c2End)} (${fmtMinsToHM(c2Dur)})\n• Giao ca: ${minsToClock(c2End)} – ${minsToClock(c3Start)} (${shHandover}p)\n• Ca 3: ${minsToClock(c3Start)} – ${minsToClock(c3End)} (${fmtMinsToHM(c3Dur)})\n• Chuẩn bị & Mời ăn: ${minsToClock(c3End)} → ${minsToClock(mealStart)}`;
+
+      } else {
+        // 2 SHIFTS
+        if (shCase === 1) {
+          let mealStart = landM - shC1MealBefore;
+          let c2End = mealStart - shHandover;
+          let netRestTotal = (c2End - startM) - shHandover;
+
+          if (netRestTotal < 20) { warnBox.style.display = 'block'; warnBox.textContent = '⚠️ Quỹ thời gian quá ngắn để chia 2 ca (TH1).'; resBox.style.display = 'none'; document.getElementById('shTimeline').innerHTML = ''; return; }
+          warnBox.style.display = 'none'; resBox.style.display = 'block';
+
+          let c1Dur = Math.floor(netRestTotal / 2);
+          let c2Dur = netRestTotal - c1Dur;
+          let c1Start = startM, c1End = c1Start + c1Dur, c2Start = c1End + shHandover;
+
+          document.getElementById('shCaseLabel').textContent = 'CHIA 2 CA • NGHỈ LIÊN TỤC';
+          document.getElementById('shMealBadge').textContent = `Mời ăn: ${minsToClock(mealStart)} • Đáp: ${minsToClock(landM)}`;
+          
+          document.getElementById('shiftBoxes').innerHTML = `
+            <div class="shift-box"><div class="shift-box-head"><span>🌙 CA 1</span><span>${fmtMinsToHM(c1Dur)}</span></div><div class="shift-box-time">${minsToClock(c1Start)} – ${minsToClock(c1End)}</div><div class="shift-box-dur">Giao ca ${minsToClock(c1End)}</div></div>
+            <div class="shift-box"><div class="shift-box-head"><span>🌙 CA 2</span><span>${fmtMinsToHM(c2Dur)}</span></div><div class="shift-box-time">${minsToClock(c2Start)} – ${minsToClock(c2End)}</div><div class="shift-box-dur">Dậy lúc ${minsToClock(c2End)} mời ăn</div></div>
+          `;
+
+          timelineItems = [
+            { color: '#0B72D6', title: 'Ca 1 nghỉ', sub: `Thời lượng: ${fmtMinsToHM(c1Dur)}`, time: `${minsToClock(c1Start)} – ${minsToClock(c1End)}` },
+            { color: '#94a3b8', title: 'Giao ca 1 → 2', sub: `${shHandover} phút`, time: `${minsToClock(c1End)} – ${minsToClock(c2Start)}` },
+            { color: '#0EA5E9', title: 'Ca 2 nghỉ', sub: `Thời lượng: ${fmtMinsToHM(c2Dur)}`, time: `${minsToClock(c2Start)} – ${minsToClock(c2End)}` },
+            { color: '#f59e0b', title: 'Chuẩn bị galley', sub: `${shHandover} phút trước mời ăn`, time: `${minsToClock(c2End)} – ${minsToClock(mealStart)}` },
+            { color: '#10b981', title: 'Phục vụ mời ăn trước đáp', sub: `Trước đáp ${fmtMinsToHM(shC1MealBefore)}`, time: `${minsToClock(mealStart)} – ${minsToClock(landM)}` },
+            { color: '#131c31', title: 'Hạ cánh', sub: nextDay ? 'Ngày hôm sau (+1)' : 'Cùng ngày', time: `${minsToClock(landM)}` }
+          ];
+          shSummaryText = `✈ CHIA 2 CA (TH1 - Đáp ${minsToClock(landM)} | Mời ăn ${minsToClock(mealStart)})\n• Ca 1: ${minsToClock(c1Start)} – ${minsToClock(c1End)} (${fmtMinsToHM(c1Dur)})\n• Giao ca: ${minsToClock(c1End)} – ${minsToClock(c2Start)} (${shHandover}p)\n• Ca 2: ${minsToClock(c2Start)} – ${minsToClock(c2End)} (${fmtMinsToHM(c2Dur)})\n• Chuẩn bị & Mời ăn: ${minsToClock(c2End)} → ${minsToClock(mealStart)}`;
+
+        } else {
+          // 2 SHIFTS TH2
+          let c2End = landM - 60;
+          let netRestTotal = (c2End - startM) - shHandover - shC2MealDur;
+
+          if (netRestTotal < 20) { warnBox.style.display = 'block'; warnBox.textContent = '⚠️ Quỹ thời gian quá ngắn để chia 2 ca (TH2).'; resBox.style.display = 'none'; document.getElementById('shTimeline').innerHTML = ''; return; }
+          warnBox.style.display = 'none'; resBox.style.display = 'block';
+
+          let c1Dur = Math.floor(netRestTotal / 2);
+          let c2Dur = netRestTotal - c1Dur;
+          let c1Start = startM, c1End = c1Start + c1Dur;
+          let mealStart = c1End + shHandover, mealEnd = mealStart + shC2MealDur;
+          let c2Start = mealEnd;
+
+          document.getElementById('shCaseLabel').textContent = 'CHIA 2 CA • MỜI ĂN GIỮA CHUYẾN';
+          document.getElementById('shMealBadge').textContent = `Mời ăn: ${minsToClock(mealStart)} • Đáp: ${minsToClock(landM)}`;
+          
+          document.getElementById('shiftBoxes').innerHTML = `
+            <div class="shift-box"><div class="shift-box-head"><span>🌙 CA 1</span><span>${fmtMinsToHM(c1Dur)}</span></div><div class="shift-box-time">${minsToClock(c1Start)} – ${minsToClock(c1End)}</div><div class="shift-box-dur">Dậy lúc ${minsToClock(c1End)} mời</div></div>
+            <div class="shift-box"><div class="shift-box-head"><span>🌙 CA 2</span><span>${fmtMinsToHM(c2Dur)}</span></div><div class="shift-box-time">${minsToClock(c2Start)} – ${minsToClock(c2End)}</div><div class="shift-box-dur">Dậy trước đáp 1h00 (${minsToClock(c2End)})</div></div>
+          `;
+
+          timelineItems = [
+            { color: '#0B72D6', title: 'Ca 1 nghỉ', sub: `Thời lượng: ${fmtMinsToHM(c1Dur)}`, time: `${minsToClock(c1Start)} – ${minsToClock(c1End)}` },
+            { color: '#f59e0b', title: 'Chuẩn bị galley', sub: `${shHandover} phút`, time: `${minsToClock(c1End)} – ${minsToClock(mealStart)}` },
+            { color: '#10b981', title: 'Mời ăn giữa 2 ca', sub: `Thời gian phục vụ: ${fmtMinsToHM(shC2MealDur)}`, time: `${minsToClock(mealStart)} – ${minsToClock(mealEnd)}` },
+            { color: '#0EA5E9', title: 'Ca 2 nghỉ', sub: `Thời lượng: ${fmtMinsToHM(c2Dur)} (đến trước đáp 1h)`, time: `${minsToClock(c2Start)} – ${minsToClock(c2End)}` },
+            { color: '#94a3b8', title: 'Chuẩn bị đáp', sub: '1 giờ trước khi đáp', time: `${minsToClock(c2End)} – ${minsToClock(landM)}` },
+            { color: '#131c31', title: 'Hạ cánh', sub: nextDay ? 'Ngày hôm sau (+1)' : 'Cùng ngày', time: `${minsToClock(landM)}` }
+          ];
+          shSummaryText = `✈ CHIA 2 CA (TH2 - Đáp ${minsToClock(landM)} | Mời ăn ${minsToClock(mealStart)})\n• Ca 1: ${minsToClock(c1Start)} – ${minsToClock(c1End)} (${fmtMinsToHM(c1Dur)})\n• Chuẩn bị & Mời ăn: ${minsToClock(c1End)} → ${minsToClock(mealEnd)}\n• Ca 2: ${minsToClock(c2Start)} – ${minsToClock(c2End)} (${fmtMinsToHM(c2Dur)})\n• Chuẩn bị đáp: ${minsToClock(c2End)} – ${minsToClock(landM)}`;
+        }
+      }
+
+      document.getElementById('shTimeline').innerHTML = timelineItems.map(item => `
+        <li class="timeline-item">
+          <div class="tl-left"><span class="tl-dot" style="background:${item.color}"></span><div><div class="tl-title">${item.title}</div><div class="tl-sub">${item.sub}</div></div></div>
+          <div class="tl-time">${item.time}</div>
+        </li>
+      `).join('');
+    }
+
+    function copyShiftPlan() {
+      if (!shSummaryText) return;
+      navigator.clipboard?.writeText(shSummaryText).then(() => showToast('Đã sao chép lịch chia ca!')).catch(() => showToast('Không thể sao chép'));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initSignIn();
+      document.getElementById('shStart').addEventListener('input', calcShifts);
+      document.getElementById('shLand').addEventListener('input', calcShifts);
+      calcShifts();
+
+      if (localStorage.getItem('ldtv3_active_tab') === 'shift') switchTab('shift');
+
+      const updateNet = () => {
+        const el = document.getElementById('netStatus');
+        el.innerHTML = navigator.onLine ? '<span class="offline-dot"></span><span>Sẵn sàng Offline</span>' : '<span class="offline-dot" style="background:#f59e0b"></span><span>Đang dùng Offline</span>';
+      };
+      window.addEventListener('online', updateNet);
+      window.addEventListener('offline', updateNet);
+      updateNet();
+
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  </script>
 </body>
 </html>
