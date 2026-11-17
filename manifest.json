@@ -1,16 +1,15 @@
 {
-  "name": "Tiện ích Tổ bay - Liên đội tiếp viên 3 VNA",
-  "short_name": "LĐTV3 Tools",
-  "description": "Tính giờ Sign-in và chia 2 ca nghỉ trên chuyến bay (Hoạt động Offline)",
+  "name": "Galley 3 Smalltalk",
+  "short_name": "Galley 3",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f6f8fb",
-  "theme_color": "#0B72D6",
+  "background_color": "#F3F4F6",
+  "theme_color": "#00558F",
   "icons": [
     {
-      "src": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%2084%22%20fill%3D%22none%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%22120%22%20y2%3D%2284%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23F5D061%22/%3E%3Cstop%20offset%3D%2250%25%22%20stop-color%3D%22%23E3A834%22/%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23C88A18%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20d%3D%22M60%208C53%2024%2049%2038%2049%2050C49%2058%2054%2064%2060%2066C66%2064%2071%2058%2071%2050C71%2038%2067%2024%2060%208Z%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M35%2018C34%2033%2037%2046%2044%2055C48%2060%2053%2063%2057%2065C52%2057%2048%2046%2048%2035C48%2027%2042%2021%2035%2018Z%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M85%2018C78%2021%2072%2027%2072%2035C72%2046%2068%2057%2063%2065C67%2063%2072%2060%2076%2055C83%2046%2086%2033%2085%2018Z%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M12%2036C18%2049%2028%2058%2041%2063C47%2065%2052%2066%2056%2066C48%2061%2040%2053%2034%2044C28%2036%2020%2035%2012%2036Z%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M108%2036C100%2035%2092%2036%2086%2044C80%2053%2072%2061%2064%2066C68%2066%2073%2065%2079%2063C92%2058%20102%2049%20108%2036Z%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M4%2058C15%2067%2030%2071%2046%2070C51%2070%2055%2069%2058%2068C48%2067%2037%2064%2027%2059C19%2055%2011%2056%204%2058Z%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M116%2058C109%2056%20101%2055%2093%2059C83%2064%2072%2067%2062%2068C65%2069%2069%2070%2074%2070C90%2071%20105%2067%20116%2058Z%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "vna-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
   ]
 }

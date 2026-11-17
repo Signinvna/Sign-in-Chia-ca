@@ -1,20 +1,40 @@
-const CACHE_NAME = 'ldtv3-crew-tools-v1';
-const ASSETS = ['./', './index.html', './manifest.json'];
+const CACHE_NAME = 'vna-ld3-cache-v1';
+const urlsToCache = [
+  './',
+  './index.html',
+  './app.js'
+];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(ASSETS)));
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        return cache.addAll(urlsToCache);
+      })
   );
-  self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
-  e.respondWith(caches.match(e.request).then((r) => r || fetch(e.request)));
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Trả về file đã cache nếu có, nếu không thì fetch từ mạng
+        return response || fetch(event.request);
+      })
+  );
+});
+
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
